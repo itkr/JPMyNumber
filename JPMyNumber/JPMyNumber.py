@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 
-class ValidatorMixin(object):
-    
+
+class _ValidatorMixin(object):
+
     def validate_length(self):
         return len(self._to_s) == self.LEN
 
@@ -9,7 +10,7 @@ class ValidatorMixin(object):
         return self.true_check_digit == self.check_digit
 
 
-class JPMyNumber(ValidatorMixin):
+class JPMyNumber(_ValidatorMixin):
 
     LEN = 12
 
