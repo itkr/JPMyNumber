@@ -29,7 +29,7 @@ Validation
 .. code-block:: python
 
     from jpmynumber import JPMyNumber
-    from jpmunumber.exceptions import JPMyNumberLengthError, JPMyNumberCheckDigitError
+    from jpmynumber.exceptions import JPMyNumberLengthError, JPMyNumberCheckDigitError
 
     try:
         JPMyNumber(123456789018)
