@@ -9,5 +9,5 @@ setup(
     license="MIT",
     keywords=["MyNumber", "Japanese"],
     url="https://github.com/itkr/JPMyNumber",
-    packages=['JPMyNumber'],
+    packages=['jpmynumber'],
 )
