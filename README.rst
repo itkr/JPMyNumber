@@ -15,8 +15,6 @@ JPMyNumber is Japanese common number of social security and tax (=My Number) lib
 Installation
 ------------
 
-To install Requests, simply:
-
 .. code-block:: bash
 
     $ pip install JPMyNumber
@@ -31,7 +29,7 @@ Validation
 .. code-block:: python
 
     from jpmynumber import JPMyNumber
-    from jpmunumber.exceptions import JPMyNumberLengthError, JPMyNumberCheckDigitError
+    from jpmynumber.exceptions import JPMyNumberLengthError, JPMyNumberCheckDigitError
 
     try:
         JPMyNumber(123456789018)
