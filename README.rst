@@ -48,3 +48,4 @@ Creation
 
     JPMyNumber.random_create()
     # <jpmynumber.core.JPMyNumber(123456789018)>
+
