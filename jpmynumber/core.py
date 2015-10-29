@@ -1,21 +1,16 @@
 # -*- coding:utf-8 -*-
+from .create import _CreateMixin
+from .validator import _ValidatorMixin
 
 
-class _ValidatorMixin(object):
-
-    def validate_length(self):
-        return len(self._to_s) == self.LEN
-
-    def validate_check_digit(self):
-        return self.true_check_digit == self.check_digit
-
-
-class JPMyNumber(_ValidatorMixin):
+class JPMyNumber(_CreateMixin, _ValidatorMixin):
 
     LEN = 12
 
-    def __init__(self, number):
+    def __init__(self, number, validation=True):
         self.number = int(number)
+        if validation:
+            self.validate()
 
     @property
     def check_digit(self):
