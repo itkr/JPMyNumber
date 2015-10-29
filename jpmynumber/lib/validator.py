@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from .exceptions import JPMyNumberCheckDigitError, JPMyNumberLengthError
+from ..exceptions import JPMyNumberCheckDigitError, JPMyNumberLengthError
 
 
 class _ValidatorMixin(object):

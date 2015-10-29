@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-from .create import _CreateMixin
-from .validator import _ValidatorMixin
+from .lib.create import _CreateMixin
+from .lib.validator import _ValidatorMixin
 
 
 class JPMyNumber(_CreateMixin, _ValidatorMixin):
@@ -11,6 +11,12 @@ class JPMyNumber(_CreateMixin, _ValidatorMixin):
         self.number = int(number)
         if validation:
             self.validate()
+
+    def __repr__(self):
+        return '<{module}.{_class}({number})>'.format(
+            module=self.__module__,
+            _class=self.__class__.__name__,
+            number=self.number)
 
     @property
     def check_digit(self):
