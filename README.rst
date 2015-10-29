@@ -15,8 +15,6 @@ JPMyNumber is Japanese common number of social security and tax (=My Number) lib
 Installation
 ------------
 
-To install Requests, simply:
-
 .. code-block:: bash
 
     $ pip install JPMyNumber
