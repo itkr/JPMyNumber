@@ -1,9 +1,10 @@
 JPMyNumber
-=========================
+==========
 
-JPMyNumber is Japanese common number of social security and tax (=My Number) library.
+JPMyNumber is Japanese common number of social security and tax
+(=My Number) library.
 
-.. code-block:: python
+.. code:: python
 
     JPMyNumber(123456789018)
     # this is valid
@@ -15,18 +16,18 @@ JPMyNumber is Japanese common number of social security and tax (=My Number) lib
 Installation
 ------------
 
-.. code-block:: bash
+::
 
     $ pip install JPMyNumber
 
 
 Usage
-------------
+-----
 
 Validation
-^^^^^^^^
+~~~~~~~~~~
 
-.. code-block:: python
+.. code:: python
 
     from jpmynumber import JPMyNumber
     from jpmynumber.exceptions import JPMyNumberLengthError, JPMyNumberCheckDigitError
@@ -40,12 +41,11 @@ Validation
 
 
 Creation
-^^^^^^^^
+~~~~~~~~
 
-.. code-block:: python
+.. code:: python
 
     from jpmynumber import JPMyNumber
 
     JPMyNumber.random_create()
     # <jpmynumber.core.JPMyNumber(123456789018)>
-
