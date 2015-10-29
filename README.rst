@@ -9,7 +9,7 @@ JPMyNumber is Japanese common number of social security and tax (=My Number) lib
     # this is valid
 
     JPMyNumber(123456789019)
-    #  JPMyNumberCheckDigitError
+    # JPMyNumberCheckDigitError
 
 
 Installation
