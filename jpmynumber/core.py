@@ -1,6 +1,31 @@
 # -*- coding:utf-8 -*-
-from .lib.create import _CreateMixin
-from .lib.validator import _ValidatorMixin
+from jpmynumber.exceptions import (JPMyNumberCheckDigitError, JPMyNumberLengthError)
+
+
+class _ValidatorMixin(object):
+
+    def validate_length(self):
+        if not len(self._to_s) == self.LEN:
+            raise JPMyNumberLengthError
+
+    def validate_check_digit(self):
+        if not self.true_check_digit == self.check_digit:
+            raise JPMyNumberCheckDigitError
+
+    def validate(self):
+        self.validate_length()
+        self.validate_check_digit()
+
+
+class _CreateMixin(object):
+
+    @classmethod
+    def random_create(cls):
+        temp = cls(
+            random.randint(int('1' + '0' * (cls.LEN - 1)), int('9' * cls.LEN)),
+            False)
+        number_list = temp._user_number_to_a + [temp.true_check_digit]
+        return cls(int(''.join([str(i) for i in number_list])))
 
 
 class JPMyNumber(_CreateMixin, _ValidatorMixin):
