@@ -5,10 +5,7 @@ JPMyNumber is Japanese common number of social security and tax (=My Number) lib
 
 .. code-block:: python
 
-    from jpmynumber import JPMyNumber
-
     JPMyNumber(123456789018)
-    # <jpmynumber.core.JPMyNumber(123456789018)>
     # this is valid
 
     JPMyNumber(123456789019)
@@ -34,12 +31,12 @@ Validation
 .. code-block:: python
 
     from jpmynumber import JPMyNumber
-    from jpmunumber.exceptions impor JPMyNumberLengthError, JPMyNumberCheckDigitError
+    from jpmunumber.exceptions import JPMyNumberLengthError, JPMyNumberCheckDigitError
 
     try:
         JPMyNumber(123456789018)
     except JPMyNumberLengthError:
-        print('length error)
+        print('length error')
     except JPMyNumberCheckDigitError:
         print('check digit error')
 
