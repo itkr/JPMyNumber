@@ -62,9 +62,7 @@ class JPMyNumber(_CreateMixin, _ValidatorMixin):
         user_number_len = len(self._user_number_to_a)
         remainder = sum([self._f(n)
                          for n in range(1, self.LEN)]) % user_number_len
-        if remainder <= 1:
-            return 0
-        return user_number_len - remainder
+        return 0 if remainder <= 1 else user_number_len - remainder
 
     @property
     def _to_a(self):
