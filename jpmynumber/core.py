@@ -5,6 +5,13 @@ from jpmynumber.exceptions import (JPMyNumberCheckDigitError,
                                    JPMyNumberLengthError)
 
 
+def _assert_n(func):
+    def validate(self, n):
+        assert 1 <= n < self.LEN
+        return func(self, n)
+    return validate
+
+
 class _ValidatorMixin(object):
 
     def validate_length(self):
@@ -53,10 +60,11 @@ class JPMyNumber(_CreateMixin, _ValidatorMixin):
     @property
     def true_check_digit(self):
         user_number_len = len(self._user_number_to_a)
-        temp = sum([self._f(n) for n in range(1, self.LEN)]) % user_number_len
-        if temp <= 1:
+        remainder = sum([self._f(n)
+                         for n in range(1, self.LEN)]) % user_number_len
+        if remainder <= 1:
             return 0
-        return user_number_len - temp
+        return user_number_len - remainder
 
     @property
     def _to_a(self):
@@ -70,15 +78,14 @@ class JPMyNumber(_CreateMixin, _ValidatorMixin):
     def _user_number_to_a(self):
         return self._to_a[0: -1]
 
+    @_assert_n
     def _p(self, n):
         return self._user_number_to_a[-n]
 
+    @_assert_n
     def _q(self, n):
-        if 1 <= n <= (self.LEN / 2):
-            return n + 1
-        if (self.LEN / 2) < n <= len(self._user_number_to_a):
-            return n - 5
-        raise
+        return n + 1 if n <= (self.LEN / 2) else n - 5
 
+    @_assert_n
     def _f(self, n):
         return self._p(n) * self._q(n)
