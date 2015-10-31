@@ -87,3 +87,16 @@ class JPMyNumber(_CreateMixin, _ValidatorMixin):
     @_assert_n
     def _f(self, n):
         return self._p(n) * self._q(n)
+
+
+class CorporationJPMyNumber(JPMyNumber):
+
+    LEN = 13
+
+    @_assert_n
+    def _q(self, n):
+        return 1 if n % 2 else 2
+
+    @property
+    def true_check_digit(self):
+        return 9 - sum([self._f(n) for n in range(1, self.LEN)]) % 9

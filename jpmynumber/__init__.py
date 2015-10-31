@@ -1,4 +1,4 @@
 # -*- coding:utf-8 -*-
-from .core import JPMyNumber
+from .core import (JPMyNumber, CorporationJPMyNumber)
 
-__version__ = '0.0.5'
+__version__ = '0.1.0'
