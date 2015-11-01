@@ -89,7 +89,7 @@ class JPMyNumber(_CreateMixin, _ValidatorMixin):
         return self._p(n) * self._q(n)
 
 
-class CorporationJPMyNumber(JPMyNumber):
+class CorporationMyNumber(JPMyNumber):
 
     LEN = 13
 

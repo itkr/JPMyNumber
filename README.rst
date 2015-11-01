@@ -49,3 +49,15 @@ Creation
 
     JPMyNumber.random_create()
     # <jpmynumber.core.JPMyNumber(123456789018)>
+
+
+Corporation Number
+------------------
+
+It also supports the corporation number.
+
+.. code:: python
+
+    from jpmynumber import CorporationMyNumber
+
+    CorporationMyNumber(9999999999999)
