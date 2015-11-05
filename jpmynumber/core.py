@@ -31,11 +31,11 @@ class _CreateMixin(object):
 
     @classmethod
     def random_create(cls):
-        temp = cls(
+        obj = cls(
             random.randint(int('1' + '0' * (cls.LEN - 1)), int('9' * cls.LEN)),
             False)
-        number_list = temp._user_number_to_a + [temp.true_check_digit]
-        return cls(int(''.join([str(i) for i in number_list])))
+        obj._update_check_digit()
+        return obj
 
 
 class JPMyNumber(_CreateMixin, _ValidatorMixin):
@@ -88,15 +88,31 @@ class JPMyNumber(_CreateMixin, _ValidatorMixin):
     def _f(self, n):
         return self._p(n) * self._q(n)
 
+    def _update_check_digit(self):
+        number_list = self._user_number_to_a + [self.true_check_digit]
+        self.number = int(''.join([str(i) for i in number_list]))
+
 
 class CorporationMyNumber(JPMyNumber):
 
     LEN = 13
+
+    @property
+    def _user_number_to_a(self):
+        return self._to_a[1:]
 
     @_assert_n
     def _q(self, n):
         return 1 if n % 2 else 2
 
     @property
+    def check_digit(self):
+        return self._to_a[0]
+
+    @property
     def true_check_digit(self):
         return 9 - sum([self._f(n) for n in range(1, self.LEN)]) % 9
+
+    def _update_check_digit(self):
+        number_list = [self.true_check_digit] + self._user_number_to_a
+        self.number = int(''.join([str(i) for i in number_list]))
