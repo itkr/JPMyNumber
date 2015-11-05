@@ -1,7 +1,8 @@
 import os
 
-from jpmynumber import __version__
 from setuptools import setup
+
+from jpmynumber import __version__
 
 with open(os.path.join(os.path.dirname(__file__), 'README.rst'), 'r') as f:
     long_description = f.read()
