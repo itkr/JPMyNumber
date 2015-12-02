@@ -5,6 +5,10 @@ class JPMyNumberError(ValueError):
     pass
 
 
+class JPMyNumberValueError(JPMyNumberError):
+    pass
+
+
 class JPMyNumberLengthError(JPMyNumberError):
     pass
 

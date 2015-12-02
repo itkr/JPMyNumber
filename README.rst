@@ -6,11 +6,11 @@ JPMyNumber is Japanese common number of social security and tax
 
 .. code:: python
 
-    JPMyNumber(123456789018)
     # this is valid
+    JPMyNumber('123456789018')
 
-    JPMyNumber(123456789019)
     # JPMyNumberCheckDigitError
+    JPMyNumber('123456789019')
 
 
 Installation
@@ -33,7 +33,7 @@ Validation
     from jpmynumber.exceptions import JPMyNumberLengthError, JPMyNumberCheckDigitError
 
     try:
-        JPMyNumber(123456789018)
+        JPMyNumber('123456789018')
     except JPMyNumberLengthError:
         print('length error')
     except JPMyNumberCheckDigitError:
@@ -48,7 +48,24 @@ Creation
     from jpmynumber import JPMyNumber
 
     JPMyNumber.random_create()
-    # <jpmynumber.core.JPMyNumber(123456789018)>
+    # <jpmynumber.core.JPMyNumber('123456789018')>
+
+
+Important Point
+---------------
+
+If the first letter is '0' you should use string
+
+.. code:: python
+
+    # this is valid
+    JPMyNumber(111111111118)
+
+    # this is valid
+    JPMyNumber('000111111111')
+
+    # error
+    JPMyNumber(000111111111)
 
 
 Corporation Number
@@ -60,4 +77,4 @@ It also supports the corporation number.
 
     from jpmynumber import CorporationMyNumber
 
-    CorporationMyNumber(9999999999999)
+    CorporationMyNumber('9999999999999')
