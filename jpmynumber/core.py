@@ -3,7 +3,8 @@ import random
 
 from jpmynumber.exceptions import (JPMyNumberCheckDigitError,
                                    JPMyNumberLengthError,
-                                   JPMyNumberPatternError)
+                                   JPMyNumberPatternError,
+                                   JPMyNumberValueError)
 
 
 def assert_n(func):
@@ -32,6 +33,12 @@ class Pattern(list):
 
 class _ValidationMixin(object):
 
+    def validate_digit(self):
+        try:
+            int(self.number)
+        except ValueError:
+            raise JPMyNumberValueError
+
     def validate_length(self):
         if not len(self._to_s) == self.LEN:
             raise JPMyNumberLengthError
@@ -45,6 +52,7 @@ class _ValidationMixin(object):
             raise JPMyNumberPatternError
 
     def validate(self):
+        self.validate_digit()
         self.validate_length()
         self.validate_pattern()
         self.validate_check_digit()
@@ -81,12 +89,12 @@ class JPMyNumber(_CreationMixin, _ValidationMixin):
     LEN = 12
 
     def __init__(self, number, validation=True):
-        self.number = int(number)
+        self.number = str(number)
         if validation:
             self.validate()
 
     def __repr__(self):
-        return '<{module}.{_class}({number})>'.format(
+        return '<{module}.{_class}(\'{number}\')>'.format(
             module=self.__module__,
             _class=self.__class__.__name__,
             number=self.number)
@@ -117,6 +125,10 @@ class JPMyNumber(_CreationMixin, _ValidationMixin):
     @property
     def _to_s(self):
         return str(self.number)
+
+    @property
+    def _to_i(self):
+        return int(self.number, 10)
 
     @property
     def _user_number_to_a(self):
