@@ -29,7 +29,7 @@ Validation
 
 .. code:: python
 
-    from jpmynumber import JPMyNumber
+    from jpmynumber import IndividualNumber
     from jpmynumber.exceptions import JPMyNumberLengthError, JPMyNumberCheckDigitError
 
     try:
