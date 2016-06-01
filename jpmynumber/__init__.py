@@ -1,4 +1,9 @@
 # -*- coding:utf-8 -*-
-from .core import (JPMyNumber, CorporationMyNumber)
+from .core import JPMyNumber
+from .individual import IndividualNumber
+from .legalentity import LegalEntityNumber
 
-__version__ = '0.1.2'
+# This will be removed
+CorporationMyNumber = LegalEntityNumber
+
+__version__ = '0.2.1'

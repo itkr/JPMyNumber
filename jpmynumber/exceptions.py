@@ -15,3 +15,7 @@ class JPMyNumberLengthError(JPMyNumberError):
 
 class JPMyNumberCheckDigitError(JPMyNumberError):
     pass
+
+
+class JPMyNumberPatternError(JPMyNumberError):
+    pass

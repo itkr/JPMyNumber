@@ -2,17 +2,36 @@
 import random
 
 from jpmynumber.exceptions import (JPMyNumberCheckDigitError,
-                                   JPMyNumberLengthError, JPMyNumberValueError)
+                                   JPMyNumberLengthError,
+                                   JPMyNumberPatternError,
+                                   JPMyNumberValueError)
 
 
-def _assert_n(func):
+def assert_n(func):
     def validate(self, n):
         assert 1 <= n < self.LEN
         return func(self, n)
     return validate
 
 
-class _ValidatorMixin(object):
+class Pattern(list):
+
+    def copy(self):
+        return Pattern([i for i in self])
+
+    def check(self, index, n):
+        if self[index] is None:
+            return True
+        if hasattr(self[index], '__iter__'):
+            return n in self[index]
+        return n == self[index]
+
+    def update(self, index, n):
+        self[index] = n
+        return self
+
+
+class _ValidationMixin(object):
 
     def validate_digit(self):
         try:
@@ -28,24 +47,44 @@ class _ValidatorMixin(object):
         if not self.true_check_digit == self.check_digit:
             raise JPMyNumberCheckDigitError
 
+    def validate_pattern(self):
+        if not self.check_pattern(self.pattern):
+            raise JPMyNumberPatternError
+
     def validate(self):
         self.validate_digit()
         self.validate_length()
+        self.validate_pattern()
         self.validate_check_digit()
 
 
-class _CreateMixin(object):
+class _CreationMixin(object):
 
     @classmethod
     def random_create(cls):
-        obj = cls(
-            random.randint(int('1' + '0' * (cls.LEN - 1)), int('9' * cls.LEN)),
-            False)
+        start = int('1' + '0' * (cls.LEN - 1))
+        stop = int('9' * cls.LEN)
+        obj = cls(random.randint(start, stop), False)
+        obj._update_pattern()
         obj._update_check_digit()
+        obj.validate()
         return obj
 
+    def _update_check_digit(self):
+        arr = self._to_a
+        arr[self._check_digit_index] = self.true_check_digit
+        self.number = int(''.join([str(i) for i in arr]))
 
-class JPMyNumber(_CreateMixin, _ValidatorMixin):
+    def _update_pattern(self):
+        arr = self._to_a
+        for i, pattern_n in enumerate(self.pattern):
+            if pattern_n is not None:
+                arr[i] = random.choice(pattern_n) if hasattr(
+                    pattern_n, '__iter__') else pattern_n
+        self.number = int(''.join([str(i) for i in arr]))
+
+
+class JPMyNumber(_CreationMixin, _ValidationMixin):
 
     LEN = 12
 
@@ -61,8 +100,12 @@ class JPMyNumber(_CreateMixin, _ValidatorMixin):
             number=self.number)
 
     @property
+    def pattern(self):
+        return Pattern([None for _i in range(self.LEN)])
+
+    @property
     def check_digit(self):
-        return self._to_a[-1]
+        return self._to_a[self._check_digit_index]
 
     @property
     def true_check_digit(self):
@@ -70,6 +113,10 @@ class JPMyNumber(_CreateMixin, _ValidatorMixin):
         remainder = sum([self._f(n)
                          for n in range(1, self.LEN)]) % user_number_len
         return 0 if remainder <= 1 else user_number_len - remainder
+
+    @property
+    def _check_digit_index(self):
+        return self.LEN - 1
 
     @property
     def _to_a(self):
@@ -85,45 +132,24 @@ class JPMyNumber(_CreateMixin, _ValidatorMixin):
 
     @property
     def _user_number_to_a(self):
-        return self._to_a[0: -1]
+        arr = [i for i in self._to_a]
+        del arr[self._check_digit_index]
+        return arr
 
-    @_assert_n
+    @assert_n
     def _p(self, n):
         return self._user_number_to_a[-n]
 
-    @_assert_n
+    @assert_n
     def _q(self, n):
         return n + 1 if n <= (self.LEN / 2) else n - 5
 
-    @_assert_n
+    @assert_n
     def _f(self, n):
         return self._p(n) * self._q(n)
 
-    def _update_check_digit(self):
-        number_list = self._user_number_to_a + [self.true_check_digit]
-        self.number = int(''.join([str(i) for i in number_list]))
-
-
-class CorporationMyNumber(JPMyNumber):
-
-    LEN = 13
-
-    @property
-    def _user_number_to_a(self):
-        return self._to_a[1:]
-
-    @_assert_n
-    def _q(self, n):
-        return 1 if n % 2 else 2
-
-    @property
-    def check_digit(self):
-        return self._to_a[0]
-
-    @property
-    def true_check_digit(self):
-        return 9 - sum([self._f(n) for n in range(1, self.LEN)]) % 9
-
-    def _update_check_digit(self):
-        number_list = [self.true_check_digit] + self._user_number_to_a
-        self.number = int(''.join([str(i) for i in number_list]))
+    def check_pattern(self, pattern):
+        for i, n in enumerate(self._to_a):
+            if not pattern.check(i, n):
+                return False
+        return True
