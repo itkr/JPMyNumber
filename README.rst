@@ -7,10 +7,10 @@ JPMyNumber is Japanese common number of social security and tax
 .. code:: python
 
     # this is valid
-    JPMyNumber('123456789018')
+    IndividualNumber('123456789018')
 
     # JPMyNumberCheckDigitError
-    JPMyNumber('123456789019')
+    IndividualNumber('123456789019')
 
 
 Installation
@@ -33,7 +33,7 @@ Validation
     from jpmynumber.exceptions import JPMyNumberLengthError, JPMyNumberCheckDigitError
 
     try:
-        JPMyNumber('123456789018')
+        IndividualNumber('123456789018')
     except JPMyNumberLengthError:
         print('length error')
     except JPMyNumberCheckDigitError:
@@ -45,36 +45,36 @@ Creation
 
 .. code:: python
 
-    from jpmynumber import JPMyNumber
+    from jpmynumber import IndividualNumber
 
-    JPMyNumber.random_create()
-    # <jpmynumber.core.JPMyNumber('123456789018')>
+    IndividualNumber.random_create()
+    # <jpmynumber.individual.IndividualNumber('123456789018')>
 
 
 Important Point
 ---------------
 
-If the first letter is '0' you should use string
+If the first letter is '0' you should use string.
 
 .. code:: python
 
     # this is valid
-    JPMyNumber(111111111118)
+    IndividualNumber(111111111118)
 
     # this is valid
-    JPMyNumber('000111111111')
+    IndividualNumber('000111111111')
 
     # error
-    JPMyNumber(000111111111)
+    IndividualNumber(000111111111)
 
 
-Corporation Number
-------------------
+Legal Entity Number
+-------------------
 
-It also supports the corporation number.
+It also supports legal entity numbers.
 
 .. code:: python
 
-    from jpmynumber import CorporationMyNumber
+    from jpmynumber import LegalEntityNumber
 
-    CorporationMyNumber('9999999999999')
+    LegalEntityNumber('9999999999999')
