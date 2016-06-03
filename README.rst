@@ -78,3 +78,12 @@ It also supports legal entity numbers.
     from jpmynumber import LegalEntityNumber
 
     LegalEntityNumber('9999999999999')
+
+It has legal entity number classes of various types
+
+* CorporationNumber
+* LocalGovernmentNumber
+* LocalGovernmentNumberWithCode
+* LocalGovernmentNumberWithoutCode
+* OtherOrganizationNumber
+* StateOrgansNumber
